@@ -1,0 +1,10 @@
+<xml>
+	<employee>
+		<firstName>Fred</firstName>
+		<lastName>Bloggs</lastName>
+	</employee>
+	<employee>
+		<firstName>Jim</firstName>
+		<lastName>Bob</lastName>
+	</employee>
+</xml>
