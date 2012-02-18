@@ -13,6 +13,8 @@ If you wish to use the caching functionality within your own custom proxy, pleas
 
 ## Installation
 
+Clone the repository or download it using the "Zip" button above.
+
 Place the ux folder in the root of your application (in the same folder as your index.html and app.js).
 Folder structure should look like the following:
 
@@ -59,6 +61,9 @@ Note the addititonal options that can be set:
 	*	The key to use for localStorage. Allows you to seperate each store into a different local storage item. 
 	* Required: No
 	* Default: 'proxyCache'
+
+
+For a complete example of this plugin, please the included "example" folder.
 
 ## Credits
 
