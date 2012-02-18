@@ -28,11 +28,11 @@ Folder structure should look like the following:
 Within your Model / Store, require the class you wish to use.
 For example if you wish to use the Ajax proxy with added caching, add the following:
 
-		requires: 'Ext.ux.proxy.AjaxCache',
+		requires: 'Ext.ux.proxy.AjaxCache'
 
 Then set the type as 'ajaxCache'
 	
-		type: 'ajaxCache',    
+		type: 'ajaxCache'
 
 Your Model / Store should look similar to:
 
