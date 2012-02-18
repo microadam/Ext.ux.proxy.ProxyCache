@@ -1,4 +1,5 @@
-# Ext.ux.proxy.ProxyCache - A Sencha Touch 2 Dual Storage Proxy
+# Ext.ux.proxy.ProxyCache
+## A Sencha Touch 2 Dual Storage Proxy
 
 A dual storage remote caching proxy. Caches the responses from remote requests in HTML5 Local Storage in order to reduce the number of HTTP requests that need to be made.
 
@@ -50,8 +51,10 @@ Your Model / Store should look similar to:
 
 Note the addititonal options that can be set:
 
-		cacheTimeout: 30 		- The amount of time until the stored repsonse expires and is cleared automatically from the cache. Optional, defaults to 1 hour (value in seconds).
-		cacheKey: 'myDate' 	- The key to use for localStorage. Allows you to seperate each store into a different local storage item. Optional, defaults to 'proxyCache'.
+		cacheTimeout: 30
+			The amount of time until the stored repsonse expires and is cleared automatically from the cache. Optional, defaults to 1 hour (value in seconds).
+		cacheKey: 'myDate'
+			The key to use for localStorage. Allows you to seperate each store into a different local storage item. Optional, defaults to 'proxyCache'.
 
 ## Credits
 
