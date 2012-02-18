@@ -51,10 +51,10 @@ Your Model / Store should look similar to:
 
 Note the addititonal options that can be set:
 
-cacheTimeout: 30
-	The amount of time until the stored repsonse expires and is cleared automatically from the cache. Optional, defaults to 1 hour (value in seconds).
-cacheKey: 'myDate'
-	The key to use for localStorage. Allows you to seperate each store into a different local storage item. Optional, defaults to 'proxyCache'.
+* cacheTimeout: 30
+	*	The amount of time until the stored repsonse expires and is cleared automatically from the cache. Optional, defaults to 1 hour (value in seconds).
+* cacheKey: 'myData'
+	*	The key to use for localStorage. Allows you to seperate each store into a different local storage item. Optional, defaults to 'proxyCache'.
 
 ## Credits
 
