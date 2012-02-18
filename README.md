@@ -44,7 +44,7 @@ Your Model / Store should look similar to:
 				cacheKey: 'myData',
 				url: '/url/to/api/',
 				reader: {
-					type: 'json',
+					type: 'json'
 				}
 			}
 		}
