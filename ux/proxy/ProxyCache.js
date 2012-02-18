@@ -85,7 +85,7 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	 * @param {Ext.data.Response} response Response returned from the server
 	 */
 	addToCache: function(request, response) {
-		if (!response._cached) {
+		if (!response._cached && request._action === "read") {
 			this.getCache();
 			var requestKey = this.config.url + Ext.encode(request.config.params);
 			if (this.cache[requestKey] === undefined) {
