@@ -40,8 +40,8 @@ Your Model / Store should look similar to:
 		config:	{
 			proxy: {
 				type: 'ajaxCache',
-				cacheTimeout: 30,	 // optional
-				cacheKey: 'myData' // optional
+				cacheTimeout: 30,
+				cacheKey: 'myData',
 				url: '/url/to/api/',
 				reader: {
 					type: 'json',
