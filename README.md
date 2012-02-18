@@ -63,7 +63,7 @@ Note the addititonal options that can be set:
 	* Default: 'proxyCache'
 
 
-For a complete example of this plugin, please the included "example" folder.
+For a complete example of this plugin, please see the included "example" folder.
 
 ## Credits
 
