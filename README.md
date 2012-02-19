@@ -73,6 +73,7 @@ For a complete example of this plugin, please see the included "example" folder.
 ## Credits
 
 [Adam Duncan](https://github.com/aduncan88) follow me on [Twitter](http://twitter.com/ajduncan88)
+
 [Tommy Maintz](http://twitter.com/tmaintz)
 
 ## Licence
