@@ -7,7 +7,7 @@ Ext.define('SenchaTest.model.EmployeeXml', {
 			'lastName'
 		],
 		proxy: {
-			type: 'ajaxCache',
+			type: 'ajaxcache',
 			url: 'employees.xml',
 			reader: {
 				type: 'xml',

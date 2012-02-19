@@ -4,7 +4,7 @@ Ext.define('SenchaTest.model.Tweet', {
 	config: {
 		fields: ['from_user', 'profile_image_url', 'text', 'created_at'],
 		proxy: {
-			type: 'jsonpCache',
+			type: 'jsonpcache',
 			cacheKey: 'tweets',
 			cacheTimeout: 600,
 			url: 'http://search.twitter.com/search.json',

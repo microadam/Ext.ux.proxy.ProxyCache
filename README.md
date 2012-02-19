@@ -32,16 +32,16 @@ For example if you wish to use the Ajax proxy with added caching, add the follow
 
 		requires: 'Ext.ux.proxy.AjaxCache'
 
-Then set the type as 'ajaxCache'
+Then set the type as 'ajaxcache'
 	
-		type: 'ajaxCache'
+		type: 'ajaxcache'
 
 Your Model / Store should look similar to:
 
 		requires: 'Ext.ux.proxy.AjaxCache',
 		config:	{
 			proxy: {
-				type: 'ajaxCache',
+				type: 'ajaxcache',
 				cacheTimeout: 30,
 				cacheKey: 'myData',
 				url: '/url/to/api/',
@@ -62,12 +62,18 @@ Note the addititonal options that can be set:
 	* Required: No
 	* Default: 'proxyCache'
 
+Included "type" values are:
+
+		ajaxcache
+		restcache
+		jsonpcache
 
 For a complete example of this plugin, please see the included "example" folder.
 
 ## Credits
 
 [Adam Duncan](https://github.com/aduncan88) follow me on [Twitter](http://twitter.com/ajduncan88)
+[Tommy Maintz](http://twitter.com/tmaintz)
 
 ## Licence
 Licenced under the [New BSD License](http://opensource.org/licenses/bsd-license.php)

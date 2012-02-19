@@ -7,7 +7,7 @@ Ext.define('SenchaTest.model.EmployeeJson', {
 			'lastName'
 		],
 		proxy: {
-			type: 'ajaxCache',
+			type: 'ajaxcache',
 			url: 'employees.json',
 			reader: {
 				type: 'json',

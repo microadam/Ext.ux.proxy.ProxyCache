@@ -8,24 +8,14 @@
 */
 Ext.define('Ext.ux.proxy.RestCache', {
 	extend: 'Ext.data.proxy.Rest',
-	alias: 'proxy.restCache',
+	alias: 'proxy.restcache',
 
 	/**
 	* Mixin the functions from {@link Ext.ux.proxy.ProxyCache}
+	* This must be included in any custom proxies that want to implement {@link Ext.ux.proxy.ProxyCache}
 	*/
 	mixins: {
 		proxyCache: 'Ext.ux.proxy.ProxyCache'
-	},
-
-	/**
-	*	Override the constructor so that we can get access to the proxy config
-	* Make sure the parent constructor is called before setCacheConfig
-	*
-	* @param {Ext.Object.classify.config} Class config
-	*/
-	constructor: function(config) {
-		this.callParent(arguments);
-		this.setCacheConfig(this.config);
 	},
 
 	/**
@@ -39,23 +29,6 @@ Ext.define('Ext.ux.proxy.RestCache', {
 	read: function(operation, callback, scope) {
 		if (!this.inCache(operation, callback, scope)) {
 			this.callParent(arguments);
-		} 
-	},
-
-	/**
-	 * Override the processResponse function so that we can the response to the cache after we have recieved it from the server.
-	 * This function must be included in any custom proxies that wish to implement {@link Ext.ux.proxy.ProxyCache}
-	 * Make sure addToCache is called before the parent function
-	 *
-	 * @param {Boolean} success Whether the operation was successful or not
-	 * @param {Ext.data.Operation} operation The operation being executed
-	 * @param {Ext.data.Request} request Request being sent to the server
-	 * @param {Ext.data.Response} response Response returned from the server
-	 * @param {function} callback Callback to be executed when operation has completed
-	 * @param {Object} scope Scope for the callback function
-	 */
-	processResponse: function(success, operation, request, response, callback, scope) {
-		this.addToCache(request, response);
-		return this.callParent(arguments);
+		}
 	}
 });

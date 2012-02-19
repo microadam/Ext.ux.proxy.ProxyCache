@@ -7,34 +7,38 @@
 * @author Adam Duncan
 */
 Ext.define('Ext.ux.proxy.ProxyCache', {
+	extend: 'Ext.mixin.Mixin',
+
 	/**
 	* Current in-memory cache
 	*/
 	cache: {},
 
 	/**
+	* Hook into processResponse so we can capture the response
+	*/
+	mixinConfig: {
+		beforeHooks: {
+			processResponse: 'processResponse'
+		}
+	},
+
+	/**
 	*	Default cache values
 	*/
-	configDefaults: {
+	config: {
 		cacheTimeout: 3600,
 		cacheKey: 'proxyCache'
 	},
 
 	/**
-	 * Sets the default cache values if they have not been defined and determines if they are valid.
-	 *
-	 * @param {Ext.Object.classify.config} Class config
-	 */
-	setCacheConfig: function(config) {
-		if (!config.cacheTimeout) {
-			this.config.cacheTimeout = this.configDefaults.cacheTimeout;
-		}	
-		if (!config.cacheKey) {
-			this.config.cacheKey = this.configDefaults.cacheKey;
+	* Validate cacheTimeout is a number
+	*/
+	applyCacheTimeout: function(cacheTimeout) {
+		if (isNaN(cacheTimeout)) {
+				throw new Error('['+ Ext.getDisplayName(arguments.callee) +'] cacheTimeout value must be a number');
 		}
-		if (isNaN(this.config.cacheTimeout)) {
-			throw new Error('['+ Ext.getDisplayName(arguments.callee) +'] cacheTimeout value must be a number');
-		}
+		return cacheTimeout;
 	},
 
 	/**
@@ -60,7 +64,7 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	 */
 	inCache: function(operation, callback, scope) {
 		var request = this.buildRequest(operation, callback, scope);
-		var requestKey = this.config.url + Ext.encode(request.config.params);
+		var requestKey = this.getUrl() + Ext.encode(request.getParams());
 
 		this.getCache();
 		this.runGarbageCollection();
@@ -85,13 +89,13 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	 * @param {Ext.data.Response} response Response returned from the server
 	 */
 	addToCache: function(request, response) {
-		if (!response._cached && request._action === "read") {
+		if (!response._cached && request.getAction() === "read") {
 			this.getCache();
-			var requestKey = this.config.url + Ext.encode(request.config.params);
+			var requestKey = this.getUrl() + Ext.encode(request.getParams());
 			if (this.cache[requestKey] === undefined) {
 				this.cache[requestKey] = {};
 			}
-			this.cache[requestKey].expires = Date.now() + (this.config.cacheTimeout * 1000);
+			this.cache[requestKey].expires = Date.now() + (this.getCacheTimeout() * 1000);
 			this.cache[requestKey].type = 'json';
 			if (response.responseText) {
 				this.cache[requestKey].data = {responseText: response.responseText};
@@ -101,7 +105,7 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 			if (response.responseXML) {
 				this.cache[requestKey].type = 'xml';
 			}
-			window.localStorage.setItem(this.config.cacheKey, Ext.encode(this.cache));
+			window.localStorage.setItem(this.getCacheKey(), Ext.encode(this.cache));
 		}
 	},
 
@@ -109,7 +113,7 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	 * Loads the local storage cache into memory
 	 */
 	getCache: function() {
-		this.cache = window.localStorage.getItem(this.config.cacheKey);
+		this.cache = window.localStorage.getItem(this.getCacheKey());
 		if (this.cache === null) {
 			this.cache = {};
 		} else {
@@ -126,5 +130,19 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	xmlToDocument: function(xml) {
 		var xmlParser = new DOMParser();
 		return xmlParser.parseFromString(xml, 'text/xml');
+	},
+
+	/**
+	 * Override the processResponse function so that we can add the response to the cache after we have recieved it from the server.
+	 *
+	 * @param {Boolean} success Whether the operation was successful or not
+	 * @param {Ext.data.Operation} operation The operation being executed
+	 * @param {Ext.data.Request} request Request being sent to the server
+	 * @param {Ext.data.Response} response Response returned from the server
+	 * @param {function} callback Callback to be executed when operation has completed
+	 * @param {Object} scope Scope for the callback function
+	 */
+	processResponse: function(success, operation, request, response, callback, scope) {
+		this.addToCache(request, response);
 	}
 });
