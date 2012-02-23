@@ -19,7 +19,8 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	*/
 	mixinConfig: {
 		beforeHooks: {
-			processResponse: 'processResponse'
+			processResponse: 'processResponse',
+			read: 'read'
 		}
 	},
 
@@ -144,5 +145,20 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	 */
 	processResponse: function(success, operation, request, response, callback, scope) {
 		this.addToCache(request, response);
+	},
+
+/**
+	 * Override the read function so that we can check if the response is already cached and return it from their instead of going to the server.
+	 * This function must be included in any custom proxies that wish to implement {@link Ext.ux.proxy.ProxyCache}
+	 *
+	 * @param {Ext.data.Operation} operation The operation being executed
+	 * @param {function} callback Callback to be executed when operation has completed
+	 * @param {Object} scope Scope for the callback function
+	 */
+	read: function(operation, callback, scope) {
+		if (this.inCache(operation, callback, scope)) {
+			return false;
+		}
 	}
+
 });

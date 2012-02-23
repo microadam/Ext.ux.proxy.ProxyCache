@@ -5,12 +5,6 @@ A dual storage remote caching proxy. Caches the responses from remote requests i
 
 Includes extended versions of the default Sencha Touch 2 server proxies (Ajax, JsonP and REST) embellished with the caching functionality.
 
-If you wish to use the caching functionality within your own custom proxy, please take a look at one of the following classes and read the comments:
-		
-		Ext.ux.proxy.AjaxCache
-		Ext.ux.proxy.JsonPache
-		Ext.ux.proxy.RestCache
-
 ## Installation
 
 Clone the repository or download it using the "Zip" button above.
@@ -69,6 +63,20 @@ Included "type" values are:
 		jsonpcache
 
 For a complete example of this plugin, please see the included "example" folder.
+
+## Using in your own Custom Proxy
+
+If you wish to use the caching functionality within your own custom proxy, add the following code to your class (it must extend Ext.data.proxy.Server or a derivative).
+
+		mixins: {
+			proxyCache: 'Ext.ux.proxy.ProxyCache'
+		}
+
+For more information please take a look at one of the following classes and read the comments:
+		
+		Ext.ux.proxy.AjaxCache
+		Ext.ux.proxy.JsonPache
+		Ext.ux.proxy.RestCache
 
 ## Credits
 
