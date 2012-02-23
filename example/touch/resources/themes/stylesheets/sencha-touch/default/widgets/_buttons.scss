@@ -230,7 +230,7 @@ $include-button-highlights: $include-highlights !default;
       height: $toolbar-icon-size;
     }
 
-    &.x-button-pressed {
+    &.x-button-pressing, &.x-button-pressed {
       background: none;
 
       $mask-radial-glow: lighten($active-color, 50%);

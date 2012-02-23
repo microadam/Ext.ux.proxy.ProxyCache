@@ -40,27 +40,19 @@
     }
 
     .x-field {
-      /*padding: .4em .4em 0 .4em;*/
       min-height:2em;
       background: #fff;
       @if $include-border-radius { @include border-radius(.2em); }
-
-      /*.x-input-el {*/
-        /*width: 80px;*/
-      /*}*/
-
-      /*&:last-child {*/
-        /*margin-bottom: .4em;*/
-      /*}*/
-
-      /*.x-clear-icon {*/
-        /*margin: .4em;*/
-      /*}*/
     }
 
     .x-form-field {
       min-height:1.5em;
+      padding-right: 0 !important;
       -webkit-appearance: none;
+    }
+
+    .x-field-input {
+      padding-right: 2.2em;
     }
   }
 

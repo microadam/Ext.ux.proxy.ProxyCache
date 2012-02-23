@@ -69,7 +69,7 @@
       @include mask-by-background($bg-color);
     }
 
-    &.x-button-pressed, &.x-button-active {
+    &.x-button-pressing, &.x-button-pressed, &.x-button-active {
       &, &:after {
         @include background-gradient(darken($bg-color, 3%), 'recessed');
       }
