@@ -18,9 +18,16 @@ $list-bg-color: #f7f7f7 !default;
 
 /**
  * @var {color} $include-list-highlights
- * Background-color for pressed list rows.
+ * Optionally disable all list gradients, text-shadows, and box-shadows. Useful for CSS debugging,
+ * non-performant browsers, or minimalist designs.
  */
 $include-list-highlights: $include-highlights !default;
+
+/**
+ * @var {boolean} $list-zebrastripe
+ * Optionally zebra-stripe the list (alternating background colors).
+ */
+$list-zebrastripe: false !default;
 
 /**
  * @var {color} $list-pressed-color
@@ -59,6 +66,12 @@ $list-header-gradient: $base-gradient !default;
  * Default size (width/height) for disclosure icons.
  */
 $list-disclosure-size: 1.7em;
+
+/**
+ * @var {measurement} $list-disclosure-round-size
+ * Default size (width/height) for disclosure icons in a list with a 'round' ui.
+ */
+$list-disclosure-round-size: 1.5em;
 
 /**
  * Includes default list styles.
@@ -101,7 +114,7 @@ $list-disclosure-size: 1.7em;
 
       .x-list-item-label {
         min-height: $global-row-height;
-        padding: 0.7em 0.8em;
+        padding: 0.65em 0.8em;
       }
 
       &.x-item-pressed {
@@ -132,10 +145,11 @@ $list-disclosure-size: 1.7em;
   }
 
   .x-ios .x-list-header-swap {
-    -webkit-transform: translate3d(0, 0, 0);
+    @include transform(translate3d(0, 0, 0));
   }
 
   .x-list-normal {
+
     .x-list-header {
       @include background-gradient($list-header-bg-color, $list-header-gradient);
       @include color-by-background($list-header-bg-color, 30%);
@@ -149,47 +163,59 @@ $list-disclosure-size: 1.7em;
     }
 
     .x-list-item {
-      .x-list-item-label {
-        border-top: 1px solid darken($list-bg-color, 15%);
-      }
 
-      &:first-child {
-        border-top: none;
-      }
-
-      &:last-child {
+      @if $list-zebrastripe {
         .x-list-item-label {
-          border-bottom: 1px solid darken($list-bg-color, 15%);
+          border-top: 1px solid transparent;
+        }
+        &:nth-child(even) .x-list-item-label {
+          background-color: darken($list-bg-color, 5%);
+        }
+        &:last-child:nth-child(odd) .x-list-item-label {
+          border-bottom: 1px solid darken($list-bg-color, 5%);
+        }
+      } @else {
+        .x-list-item-label {
+          border-top: 1px solid darken($list-bg-color, 10%);
+        }
+        &:last-child .x-list-item-label {
+          border-bottom: 1px solid darken($list-bg-color, 10%);
         }
       }
 
-      &.x-item-pressed {
-        .x-list-item-label {
-          @if $include-list-highlights {
-            border-top-color: $list-pressed-color;
-          }
-        }
+      &:first-child .x-list-item-label {
+        border-top: 0;
       }
 
-      &.x-item-selected {
-        .x-list-item-label {
-          @if $include-list-highlights {
-            border-top-color: lighten($list-active-color, 10%);
-            border-bottom-color: darken($list-active-color, 15%);
-          }
+      @if $include-list-highlights {
+        &.x-item-pressed .x-list-item-label {
+          border-top-color: $list-pressed-color;
+          background-color: $list-pressed-color;
+        }
+
+        &.x-item-selected .x-list-item-label {
+          border-top-color: $list-active-color;
+          border-bottom-color: darken($list-active-color, 15%);
         }
       }
     }
+
+
   }
 
   .x-list-round {
     .x-scroll-view {
-      background-color: #EEEEEE !important;
+      background-color: #EEEEEE !important; // @todo No !important plz
     }
 
     .x-list-disclosure {
-      -webkit-mask: 0 0 theme_image($theme-name, "pictos/code3.png") no-repeat;
-      @include background-gradient(#777, 10%);
+      overflow: hidden;
+      -webkit-mask: 0 0 theme_image($theme-name, "disclosure2.png") no-repeat;
+      -webkit-mask-size: $list-disclosure-round-size;
+      @include background-gradient(lighten(desaturate($base-color, 10), 10));
+      width: $list-disclosure-round-size;
+      height: $list-disclosure-round-size;
+      bottom: 0.5em;
     }
 
     .x-list-header {
@@ -337,11 +363,11 @@ $list-disclosure-size: 1.7em;
     background-size: 2em 3em;
     /*-webkit-transition-property: -webkit-transform;*/
     /*-webkit-transition-duration: 200ms;*/
-    -webkit-transform: rotate(0deg);
+    @include rotate(0deg);
   }
 
   .x-list-pullrefresh-release .x-list-pullrefresh-arrow {
-    -webkit-transform: rotate(-180deg);
+    @include rotate(-180deg);
   }
 
   .x-list-pullrefresh-wrap {

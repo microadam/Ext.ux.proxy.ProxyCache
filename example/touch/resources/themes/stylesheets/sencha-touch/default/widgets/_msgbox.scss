@@ -8,6 +8,7 @@
     min-width: 15em;
     max-width: 20em;
     padding: 0.8em;
+    margin: .5em;
     -webkit-box-shadow: rgba(#000, .4) 0 .1em .5em;
     @if $include-border-radius { @include border-radius($panel-border-radius); }
     border: .15em solid $base-color;
