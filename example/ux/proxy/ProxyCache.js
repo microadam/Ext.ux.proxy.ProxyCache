@@ -36,8 +36,8 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	* Validate cacheTimeout is a number
 	*/
 	applyCacheTimeout: function(cacheTimeout) {
-		if (isNaN(cacheTimeout)) {
-				throw new Error('['+ Ext.getDisplayName(arguments.callee) +'] cacheTimeout value must be a number');
+		if (isNaN(cacheTimeout) && typeof cacheTimeout !== 'function' ) {
+				throw new Error('['+ Ext.getDisplayName(arguments.callee) +'] cacheTimeout must be a number or a function');
 		}
 		return cacheTimeout;
 	},
@@ -66,21 +66,28 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	inCache: function(operation, callback, scope) {
 		var request = this.buildRequest(operation, callback, scope);
 		var requestKey = this.getUrl() + Ext.encode(request.getParams());
+		var validCache = false;
 
 		this.getCache();
 		this.runGarbageCollection();
 
-		if ((this.cache[requestKey] !== undefined) && (this.cache[requestKey].expires >= Date.now())) {
-			var response = this.cache[requestKey].data;
-			if (this.cache[requestKey].type === 'xml') {
-				response.responseXML = this.xmlToDocument(response.responseText);
+		if (this.cache[requestKey] !== undefined) {
+			if (typeof this.getCacheTimeout() === 'function') {
+				validCache = this.getCacheTimeout()(this);
+			} else {
+				validCache = this.cache[requestKey].expires >= Date.now();
 			}
-			response._cached = true;
-			this.processResponse(true, operation, request, response, callback, scope);
-			return true;
-		} else {
-			return false;
+			if (validCache) {
+				var response = this.cache[requestKey].data;
+				if (this.cache[requestKey].type === 'xml') {
+					response.responseXML = this.xmlToDocument(response.responseText);
+				}
+				response._cached = true;
+				this.processResponse(true, operation, request, response, callback, scope);
+				return true;
+			}
 		}
+		return false;
 	},
 
 	/**
@@ -96,7 +103,15 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 			if (this.cache[requestKey] === undefined) {
 				this.cache[requestKey] = {};
 			}
-			this.cache[requestKey].expires = Date.now() + (this.getCacheTimeout() * 1000);
+
+			var expirationDate;
+			if (typeof this.getCacheTimeout() === 'function') {
+				expirationDate = Date.now() + 1577846298735; // Set to expire in 50 years
+			} else {
+				expirationDate = Date.now() + (this.getCacheTimeout() * 1000);
+			}
+			this.cache[requestKey].expires = expirationDate;
+
 			this.cache[requestKey].type = 'json';
 			if (response.responseText) {
 				this.cache[requestKey].data = {responseText: response.responseText};

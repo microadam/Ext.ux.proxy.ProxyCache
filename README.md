@@ -51,6 +51,7 @@ Note the addititonal options that can be set:
 	*	The amount of time until the stored repsonse expires and is cleared automatically from the cache. 
 	* Required: No
 	*	Default: 1 hour (value in seconds)
+	* This may also be a function. If the function returns false it will invalidate the cache.
 * cacheKey: 'myData'
 	*	The key to use for localStorage. Allows you to seperate each store into a different local storage item. 
 	* Required: No
