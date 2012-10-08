@@ -93,7 +93,6 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 		if (!response._cached && request.getAction() === "read") {
 			this.getCache();
 			var requestKey = request.getUrl() + Ext.encode(request.getParams());
-			console.log('requestKey: ', requestKey );
 
 			if (this.cache[requestKey] === undefined) {
 				this.cache[requestKey] = {};
