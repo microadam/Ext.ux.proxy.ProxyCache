@@ -85,5 +85,7 @@ For more information please take a look at one of the following classes and read
 
 [Tommy Maintz](http://twitter.com/tmaintz)
 
+[David Collom](https://github.com/davidcollom)
+
 ## Licence
 Licenced under the [New BSD License](http://opensource.org/licenses/bsd-license.php)
