@@ -65,7 +65,7 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	 */
 	inCache: function(operation, callback, scope) {
 		var request = this.buildRequest(operation, callback, scope);
-		var requestKey = this.getUrl() + Ext.encode(request.getParams());
+		var requestKey = request.getUrl() + Ext.encode(request.getParams());
 
 		this.getCache();
 		this.runGarbageCollection();
@@ -92,7 +92,9 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	addToCache: function(request, response) {
 		if (!response._cached && request.getAction() === "read") {
 			this.getCache();
-			var requestKey = this.getUrl() + Ext.encode(request.getParams());
+			var requestKey = request.getUrl() + Ext.encode(request.getParams());
+			console.log('requestKey: ', requestKey );
+
 			if (this.cache[requestKey] === undefined) {
 				this.cache[requestKey] = {};
 			}
