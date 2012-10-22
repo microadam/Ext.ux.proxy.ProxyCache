@@ -145,7 +145,7 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	 * @param {Object} scope Scope for the callback function
 	 */
 	processResponse: function(success, operation, request, response, callback, scope) {
-		this.addToCache(request, response);
+		if(success) { this.addToCache(request, response); }
 	},
 
 /**
