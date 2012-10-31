@@ -81,7 +81,7 @@ For more information please take a look at one of the following classes and read
 
 ## Credits
 
-[Adam Duncan](https://github.com/aduncan88) follow me on [Twitter](http://twitter.com/ajduncan88)
+[Adam Duncan](https://github.com/aduncan88) follow me on [Twitter](http://twitter.com/microadam)
 
 [Tommy Maintz](http://twitter.com/tmaintz)
 
