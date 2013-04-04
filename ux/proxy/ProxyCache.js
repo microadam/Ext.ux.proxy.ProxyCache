@@ -29,7 +29,8 @@ Ext.define('Ext.ux.proxy.ProxyCache', {
 	*/
 	config: {
 		cacheTimeout: 3600,
-		cacheKey: 'proxyCache'
+		cacheKey: 'proxyCache',
+                noCache: false
 	},
 
 	/**
